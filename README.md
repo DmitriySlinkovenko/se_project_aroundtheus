@@ -17,3 +17,7 @@ This project is about sharing the love of travel between fellow Americans. Most 
 **Updates**
 
 - Add functionality with JavaScript
+
+**Video Link**
+
+- [Link to the video on Google Drive](https://drive.google.com/file/d/15PRLWfVL1CK0KQ3mXmIUYp-XX5zPscXb/view?usp=drive_link)
