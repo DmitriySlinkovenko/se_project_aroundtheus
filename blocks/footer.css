@@ -1,0 +1,24 @@
+.footer {
+  background-color: black;
+  color: #545454;
+  max-width: 882px;
+  width: auto;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.footer__text {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21.78px;
+  text-align: left;
+  margin: 0;
+  max-width: 318px;
+}
+
+@media screen and (max-width: 940px) {
+  .footer {
+    margin: 0 20px;
+    max-width: calc(100% - 40px);
+  }
+}

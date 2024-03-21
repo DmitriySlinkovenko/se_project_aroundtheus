@@ -1,0 +1,26 @@
+.header {
+  max-width: 880px;
+  margin: 0 auto 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: black;
+}
+
+.header__logo {
+  width: 173px;
+  height: 33px;
+}
+
+.header__underline {
+  display: block;
+  border-bottom: 1px solid #545454;
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 940px) {
+  .header {
+    margin: 0 20px 40px;
+    max-width: calc(100% - 40px);
+  }
+}
