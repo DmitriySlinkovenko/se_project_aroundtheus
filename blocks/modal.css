@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  display: none;
 }
 
 .modal_opened {
@@ -31,51 +32,6 @@
   font-weight: 900;
   line-height: 1.2;
   text-align: left;
-}
-
-.modal__form {
-  display: flex;
-  flex-direction: column;
-  max-width: 358px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.2;
-  text-align: left;
-}
-
-.form__title {
-  margin-bottom: 30px;
-  border: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 0 0 13px;
-}
-
-.form__title:focus {
-  outline: none;
-}
-
-.form__subtitle {
-  border: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 0 0 13px;
-}
-
-.form__subtitle:focus {
-  outline: none;
-}
-
-.form__save-button {
-  margin-top: 48px;
-  height: 50px;
-  background-color: #000;
-  color: #fff;
-  border: 0;
-  border-radius: 2px;
-  padding: 0;
-}
-
-.form__save-button:hover {
-  opacity: 0.8;
 }
 
 .modal__close-button {
