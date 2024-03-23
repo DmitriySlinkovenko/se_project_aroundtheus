@@ -1,0 +1,118 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.modal_opened {
+  display: flex;
+}
+
+.modal__container {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+  padding: 34px 36px 36px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  position: relative;
+}
+
+.modal__heading {
+  margin: 0 0 54px;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  max-width: 358px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.modal__form_title {
+  margin-bottom: 30px;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0 0 13px;
+}
+
+.modal__form_title:focus {
+  outline: none;
+}
+
+.modal__form_subtitle {
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0 0 13px;
+}
+
+.modal__form_subtitle:focus {
+  outline: none;
+}
+
+.modal__save-button {
+  margin-top: 48px;
+  height: 50px;
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  border-radius: 2px;
+  padding: 0;
+}
+
+.modal__save-button:hover {
+  opacity: 0.8;
+}
+
+.modal__close-button {
+  background-image: url(../images/close-button.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: calc(100% + 6px);
+}
+
+.modal__close-button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 618px) {
+  .modal__container {
+    max-width: 282px;
+    padding: 25px 22px;
+  }
+
+  .modal__heading {
+    font-size: 18px;
+    margin-bottom: 75px;
+  }
+
+  .modal__close-button {
+    width: 26px;
+    height: 26px;
+    bottom: calc(100% + 19px);
+    left: calc(100% - 31px);
+  }
+}
