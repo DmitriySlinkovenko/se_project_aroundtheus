@@ -61,7 +61,10 @@ function getCardElement(data) {
   cardImage.src = data.link;
   cardTitle.textContent = data.name;
   cardImage.alt = data.name;
-  cardElements.append(cardElement);
+  return cardElement;
 }
 
-initialCards.forEach(getCardElement);
+initialCards.forEach((data) => {
+  const cardElement = getCardElement(data);
+  cardElements.append(cardElement);
+});
