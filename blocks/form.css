@@ -8,24 +8,18 @@
   text-align: left;
 }
 
-.form__title {
-  margin-bottom: 30px;
+.form__input {
+  margin: 0;
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding: 0 0 13px;
 }
 
-.form__title:focus {
-  outline: none;
+.form__input:nth-child(1) {
+  margin-bottom: 13px;
 }
 
-.form__subtitle {
-  border: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 0 0 13px;
-}
-
-.form__subtitle:focus {
+.form__input:focus {
   outline: none;
 }
 
@@ -34,6 +28,8 @@
   height: 50px;
   background-color: #000;
   color: #fff;
+  font-size: 18px;
+  text-align: center;
   border: 0;
   border-radius: 2px;
   padding: 0;
@@ -41,4 +37,11 @@
 
 .form__save-button:hover {
   opacity: 0.8;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 618px) {
+  .form__save-button {
+    font-size: 14px;
+  }
 }
