@@ -54,6 +54,30 @@
   cursor: pointer;
 }
 
+.modal__preview-image {
+  position: relative;
+  background-color: transparent;
+  margin: auto;
+  color: #fff;
+}
+
+.modal__card-preview_image {
+  max-width: 75vw;
+  max-height: 75vh;
+  height: 100%;
+}
+
+.modal__preview_heading {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.2;
+  max-width: 290px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 @media screen and (max-width: 618px) {
   .modal__container {
     max-width: 282px;
@@ -70,5 +94,16 @@
     height: 26px;
     bottom: calc(100% + 19px);
     left: calc(100% - 31px);
+  }
+
+  .modal__close-button_preview {
+    width: 26px;
+    height: 26px;
+    bottom: calc(100% + 6px);
+    left: calc(100% + 6px);
+  }
+
+  .modal__preview_heading {
+    max-width: 240px;
   }
 }
