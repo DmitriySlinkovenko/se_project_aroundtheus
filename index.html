@@ -54,24 +54,31 @@
       <div class="modal" id="edit__modal">
         <div class="modal__container">
           <button class="modal__close-button" type="button"></button>
-          <h2 class="modal__heading">Edit Profile</h2>
-          <form class="form">
-            <input
+          <h2 class="modal__heading">Edit profile</h2>
+          <form class="form" novalidate>
+            <label class="form__label"><input
               type="text"
               class="form__input"
               id="input__title"
               name="name"
               placeholder="Name"
               required
+              minlength="2"
+              maxlength="20"
             />
-            <input
+            <span class="form__error" id="input__title-error"></span></label>
+            <label class="form__label"> <input
               type="text"
               class="form__input"
               id="input__subtitle"
               name="about me"
               placeholder="About me"
               required
+              minlength="2"
+              maxlength="200"
             />
+            <span class="form__error" id="input__subtitle-error"></span></label>
+           
             <button class="form__save-button" type="submit">Save</button>
           </form>
         </div>
@@ -81,27 +88,34 @@
         <div class="modal__container">
           <button class="modal__close-button" type="button"></button>
           <h2 class="modal__heading">New Place</h2>
-          <form class="form">
-            <input
+          <form class="form" novalidate>
+            <label class="form__label"><input
               type="text"
               class="form__input"
               id="input__image_title"
               name="Image title"
               placeholder="Title"
               required
+              minlength="1"
+              maxlength="30"
             />
-            <input
-              type="text"
+            <span class="form__error" id="input__image_title-error"></span></label>
+            
+            <label class="form__label"><input
+              type="url"
               class="form__input"
               id="input__image_link"
               name="image link"
               placeholder="Image link"
               required
             />
+            <span class="form__error" id="input__image_link-error"></span></label>
+            
             <button
-              class="form__save-button"
+              class="form__save-button form__button_disabled"
               id="add-card__button"
               type="submit"
+              disabled
             >
               Create
             </button>
@@ -118,5 +132,6 @@
       </div>
 
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>

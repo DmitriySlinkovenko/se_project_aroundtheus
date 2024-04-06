@@ -142,5 +142,27 @@ imageSubmitForm.addEventListener("submit", addNewCard);
 closeImagePreview.addEventListener("click", () =>
   closeModal(imagePreviewModal)
 );
+profileEditModal.addEventListener("click", (e) => {
+  if (e.target == profileEditModal) {
+    closeModal(profileEditModal);
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeModal(profileEditModal);
+    closeModal(imagePreviewModal);
+    closeModal(addNewCardModal);
+  }
+});
+addNewCardModal.addEventListener("click", (e) => {
+  if (e.target == addNewCardModal) {
+    closeModal(addNewCardModal);
+  }
+});
+imagePreviewModal.addEventListener("click", (e) => {
+  if (e.target == imagePreviewModal) {
+    closeModal(imagePreviewModal);
+  }
+});
 
 initialCards.forEach((data) => renderCard(data));
