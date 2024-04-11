@@ -1,3 +1,6 @@
+import FormValidator from "../components/FormValidator.js";
+import Card from "../components/card.js";
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -27,7 +30,7 @@ const initialCards = [
 
 // Templates and modals
 const profileEditModal = document.querySelector("#edit__modal");
-const cardTemplate =
+const cardTemplateContent =
   document.querySelector(".card__template").content.firstElementChild;
 const addNewCardModal = document.querySelector("#add-card__modal");
 const imagePreviewModal = document.querySelector("#preview-image-modal");
@@ -61,9 +64,12 @@ const imagePreviewTitle = imagePreviewModal.querySelector(
 const cardImagePreview = imagePreviewModal.querySelector(
   ".modal__card-preview_image"
 );
+const cardElement = cardTemplateContent.cloneNode(true);
+const cardImage = cardElement.querySelector(".card__image");
+const cardTitle = cardElement.querySelector(".card__title");
 
 // Form submits
-const formSubmit = profileEditModal.querySelector(".form");
+const profileFormSubmit = profileEditModal.querySelector(".form");
 const imageSubmitForm = addNewCardModal.querySelector(".form");
 
 // Functions
@@ -72,10 +78,14 @@ function closeModal(modal) {
   document.removeEventListener("keydown", closeModalByEscape);
 }
 
+const handleImageClick = (name, link) => {
+  openModal(imagePreviewModal);
+  imagePreviewTitle.textContent = name;
+  cardImagePreview.src = link;
+  cardImagePreview.alt = name;
+};
+
 function getCardElement(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardTitle = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
   const deleteButton = cardElement.querySelector(".card__remove-button");
 
@@ -85,13 +95,6 @@ function getCardElement(data) {
 
   deleteButton.addEventListener("click", () => {
     cardElement.remove();
-  });
-
-  cardImage.addEventListener("click", function () {
-    openModal(imagePreviewModal);
-    imagePreviewTitle.textContent = cardTitle.textContent;
-    cardImagePreview.alt = data.name;
-    cardImagePreview.src = data.link;
   });
 
   cardImage.src = data.link;
@@ -130,8 +133,8 @@ function addNewCard(evt) {
 }
 
 function renderCard(data) {
-  const cardElement = getCardElement(data);
-  cardElements.prepend(cardElement);
+  const card = new Card(data, "#card-template", handleImageClick);
+  cardElements.prepend(card.generateCard());
 }
 
 function closeModalOnClick(evt) {
@@ -158,9 +161,12 @@ profileEditCloseButton.addEventListener("click", () =>
   closeModal(profileEditModal)
 );
 
-addNewCardButton.addEventListener("click", () => openModal(addNewCardModal));
+addNewCardButton.addEventListener("click", () => {
+  openModal(addNewCardModal);
+  addImageFormValidator.disableButton();
+});
 closeNewCardModal.addEventListener("click", () => closeModal(addNewCardModal));
-formSubmit.addEventListener("submit", submitProfileData);
+profileFormSubmit.addEventListener("submit", submitProfileData);
 imageSubmitForm.addEventListener("submit", addNewCard);
 closeImagePreview.addEventListener("click", () =>
   closeModal(imagePreviewModal)
@@ -171,3 +177,22 @@ addNewCardModal.addEventListener("mousedown", closeModalOnClick);
 imagePreviewModal.addEventListener("mousedown", closeModalOnClick);
 
 initialCards.forEach((data) => renderCard(data));
+
+// Form Validation
+const settings = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__save-button",
+  inactiveButtonClass: "form__button_disabled",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__error_visible",
+};
+
+const profileFormValidator = new FormValidator(settings, profileFormSubmit);
+const addImageFormValidator = new FormValidator(settings, imageSubmitForm);
+profileFormValidator.enableValidation();
+addImageFormValidator.enableValidation();
+addImageFormValidator.disableButton(
+  document.querySelectorAll(settings.inputSelector),
+  document.querySelectorAll(settings.submitButtonSelector)
+);
