@@ -154,6 +154,7 @@ function setProfileValues() {
 // Event Listeners
 profileEditButton.addEventListener("click", () => {
   setProfileValues();
+  profileFormValidator.disableButton();
   openModal(profileEditModal);
 });
 
@@ -192,7 +193,3 @@ const profileFormValidator = new FormValidator(settings, profileFormSubmit);
 const addImageFormValidator = new FormValidator(settings, imageSubmitForm);
 profileFormValidator.enableValidation();
 addImageFormValidator.enableValidation();
-addImageFormValidator.disableButton(
-  document.querySelectorAll(settings.inputSelector),
-  document.querySelectorAll(settings.submitButtonSelector)
-);
