@@ -5,17 +5,22 @@ export default class ModalWithForm extends Modal {
     super(modalSelector);
     this._modalForm = this._modalElement.querySelector("form");
     this._handleFormSubmit = handleFormSubmit;
+    this._inputList = this._modalElement.querySelectorAll(".form__input");
   }
 
   _getInputValues() {
-    this._inputList = this._modalElement.querySelectorAll(".form__input");
     const inputData = {};
-
     this._inputList.forEach(({ name, value }) => {
       inputData[name] = value;
     });
 
     return inputData;
+  }
+
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      input.value = data[input.name];
+    });
   }
 
   setEventListeners() {

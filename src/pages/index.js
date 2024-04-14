@@ -29,8 +29,7 @@ profileEditModal.setEventListeners();
 constants.profileEditButton.addEventListener("click", () => {
   profileEditModal.open();
   const userInfo = user.getUserInfo();
-  constants.modalTitle.value = userInfo.name;
-  constants.modalSubtitle.value = userInfo.description;
+  profileEditModal.setInputValues(userInfo);
   profileFormValidator.resetValidation();
 });
 
@@ -39,19 +38,22 @@ function handleProfileFormSubmit({ name, description }) {
 }
 
 // Add new card modal
-const addNewCardModal = new ModalWithForm("#add-card__modal", () => {
-  const name = constants.imageTitle.value;
-  const link = constants.imageLink.value;
-  addNewCardModal.close();
-  renderCard({ name, link });
-  constants.imageSubmitForm.reset();
-  addImageFormValidator.resetValidation();
-});
+const addNewCardModal = new ModalWithForm(
+  "#add-card__modal",
+  handleImageSubmit
+);
 
 addNewCardModal.setEventListeners();
 constants.addNewCardButton.addEventListener("click", () => {
   addNewCardModal.open();
 });
+
+function handleImageSubmit(card) {
+  renderCard(card);
+  addNewCardModal.close();
+  constants.imageSubmitForm.reset();
+  addImageFormValidator.resetValidation();
+}
 
 //Section
 const cardSection = new Section(
@@ -75,7 +77,7 @@ function createCard(data) {
 
 function renderCard(data) {
   const card = createCard(data);
-  constants.cardElements.prepend(card);
+  cardSection.addItem(card);
 }
 
 // Form Validation

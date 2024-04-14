@@ -32,20 +32,15 @@ export const profileEditButton = document.querySelector(
 export const addNewCardButton = document.querySelector(".profile__add-button");
 
 // Inputs
-export const modalTitle = document.querySelector("#input__title");
-export const modalSubtitle = document.querySelector("#input__subtitle");
 export const imageTitle = document.querySelector("#input__image_title");
 export const imageLink = document.querySelector("#input__image_link");
-
-// Elements
-
-export const cardElements = document.querySelector(".elements");
 
 // Form submits
 export const profileFormSubmit = document.querySelector(
   "#profile-submit__form"
 );
 export const imageSubmitForm = document.querySelector("#image-submit__form");
+
 // Form Validation
 export const settings = {
   formSelector: ".form",
