@@ -1,24 +1,31 @@
 class Card {
-  constructor(data, templateSelector, handleImageClick) {
+  constructor(data, templateSelector, handleImageClick, handleDeleteButton) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteButton = handleDeleteButton;
+    this._id = data._id;
   }
 
   _setEventListeners() {
     this._likeButton = this._element.querySelector(".card__like-button");
     this._deleteButton = this._element.querySelector(".card__remove-button");
     this._likeButton.addEventListener("click", () => this._handleLikeButton());
-    this._deleteButton.addEventListener("click", () =>
-      this._handleDeleteCard()
-    );
+    this._deleteButton.addEventListener("click", () => {
+      this._handleDeleteButton(this.getId());
+      console.log(this.getId());
+    });
     this._cardImage.addEventListener("click", () => {
       this._handleImageClick(this._name, this._link);
     });
   }
 
-  _handleDeleteCard() {
+  getId() {
+    return this._id;
+  }
+
+  handleCardDelete() {
     this._element.remove();
   }
 
@@ -42,6 +49,7 @@ class Card {
     this._cardTitle.textContent = this._name;
     this._cardImage.alt = this._name;
     this._setEventListeners();
+    console.log(this.getId());
     return this._element;
   }
 }

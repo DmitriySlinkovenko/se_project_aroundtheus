@@ -30,6 +30,7 @@ export const profileEditButton = document.querySelector(
   ".profile__edit-button"
 );
 export const addNewCardButton = document.querySelector(".profile__add-button");
+export const userAvatarButton = document.querySelector("#avatar-edit");
 
 // Inputs
 export const imageTitle = document.querySelector("#input__image_title");
@@ -40,6 +41,8 @@ export const profileFormSubmit = document.querySelector(
   "#profile-submit__form"
 );
 export const imageSubmitForm = document.querySelector("#image-submit__form");
+export const avatarSubmitForm = document.querySelector("#avatar-edit-form");
+export const deleteConfirmForm = document.querySelector("#verification-form");
 
 // Form Validation
 export const settings = {
