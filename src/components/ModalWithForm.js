@@ -3,9 +3,10 @@ import Modal from "../components/Modal";
 export default class ModalWithForm extends Modal {
   constructor(modalSelector, handleFormSubmit) {
     super(modalSelector);
-    this._modalForm = this._modalElement.querySelector("form");
+    this._modalForm = this._modalElement.querySelector(".form");
     this._handleFormSubmit = handleFormSubmit;
     this._inputList = this._modalElement.querySelectorAll(".form__input");
+    this._submitButton = this._modalForm.querySelector(".form__save-button");
   }
 
   _getInputValues() {
@@ -20,6 +21,14 @@ export default class ModalWithForm extends Modal {
     this._inputList.forEach((input) => {
       input.value = data[input.name];
     });
+  }
+
+  setLoading(isLoading, loadingText = "Saving...") {
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      this._submitButton.textContent = "Save";
+    }
   }
 
   setEventListeners() {

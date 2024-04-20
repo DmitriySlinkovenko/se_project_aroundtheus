@@ -47,8 +47,16 @@ constants.profileEditButton.addEventListener("click", () => {
 });
 
 function handleProfileFormSubmit({ name, about }) {
-  user.setUserInfo({ name, about });
-  api.updateUserProfile({ name, about });
+  profileEditModal.setLoading(true);
+  api
+    .updateUserProfile({ name, about })
+    .then(() => {
+      user.setUserInfo({ name, about });
+    })
+    .finally(() => {
+      profileEditModal.setLoading(false);
+      profileEditModal.close();
+    });
 }
 
 //User avatar
@@ -62,8 +70,16 @@ constants.userAvatarButton.addEventListener("click", () => {
 });
 
 function handleAvatarSubmit({ link }) {
-  api.updateAvatar({ link });
-  user.setAvatar(link);
+  avatarEditModal.setLoading(true);
+  api
+    .updateAvatar({ link })
+    .then(() => {
+      user.setAvatar(link);
+    })
+    .finally(() => {
+      avatarEditModal.setLoading(false);
+      avatarEditModal.close();
+    });
 }
 
 api.getUserInfo().then((data) => {
@@ -83,25 +99,52 @@ constants.addNewCardButton.addEventListener("click", () => {
 });
 
 function handleImageSubmit(card) {
-  renderCard(card);
-  addNewCardModal.close();
-  api.addCard(card);
-  constants.imageSubmitForm.reset();
-  addImageFormValidator.resetValidation();
+  addNewCardModal.setLoading(true, "Saving...");
+  api
+    .addCard(card)
+    .then(() => {
+      renderCard(card);
+    })
+    .finally(() => {
+      addNewCardModal.setLoading(false);
+      constants.imageSubmitForm.reset();
+      addImageFormValidator.resetValidation();
+      addNewCardModal.close();
+    });
+}
+
+//Card like && dislike
+
+function likeButton(id) {
+  api.getInitialCards().then((data) =>
+    data.forEach((d) => {
+      if (d._id === id) {
+        if (d.isLiked === true) {
+          api.dislikeCard(id);
+        } else {
+          api.likeCard(id);
+        }
+      }
+    })
+  );
 }
 
 //Delete card confirmation modal
 
 const confirmationModal = new ModalWithConfirmation(
   "#verification-modal",
-  handleDeleteCard
+  handleDeleteCardForm
 );
 confirmationModal.setEventListeners();
 
-function handleDeleteCard(id) {
+function handleDeleteCardForm(id, element) {
   confirmationModal.open();
   constants.deleteConfirmForm.addEventListener("submit", () => {
-    api.deleteCard(id);
+    confirmationModal.setLoading(true, "Deleting...");
+    api
+      .deleteCard(id)
+      .then(() => element.remove())
+      .finally(() => confirmationModal.setLoading(false));
   });
 }
 
@@ -111,7 +154,6 @@ const cardSection = new Section(
     items: constants.initialCards,
     renderer: (cardData) => {
       const cardElement = createCard(cardData);
-      console.log(cardElement.getId());
       cardSection.addItem(cardElement);
     },
   },
@@ -130,7 +172,8 @@ function createCard(data) {
     data,
     "#card-template",
     handleImageClick,
-    handleDeleteCard
+    handleDeleteCardForm,
+    likeButton
   );
   return card.generateCard();
 }
@@ -138,6 +181,11 @@ function createCard(data) {
 function renderCard(data) {
   const card = createCard(data);
   cardSection.addItem(card);
+  if (data.isLiked) {
+    card
+      .querySelector(".card__like-button")
+      .classList.add("card__like-button_active");
+  }
 }
 
 // Form Validation

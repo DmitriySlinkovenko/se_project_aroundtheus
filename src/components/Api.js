@@ -80,13 +80,10 @@ export default class Api {
       });
   }
 
-  likeCard() {
-    return fetch(`${this._url}/cards/:cardId/likes`, {
+  likeCard(id) {
+    return fetch(`${this._url}/cards/${id}/likes`, {
       method: "PUT",
       headers: this._header,
-      body: JSON.stringify({
-        avatar: link,
-      }),
     })
       .then((res) => this._checkResponse(res))
       .catch((err) => {
@@ -94,13 +91,10 @@ export default class Api {
       });
   }
 
-  dislikeCard() {
-    return fetch(`${this._url}/cards/:cardId/likes`, {
+  dislikeCard(id) {
+    return fetch(`${this._url}/cards/${id}/likes`, {
       method: "DELETE",
       headers: this._header,
-      body: JSON.stringify({
-        avatar: link,
-      }),
     })
       .then((res) => this._checkResponse(res))
       .catch((err) => {
