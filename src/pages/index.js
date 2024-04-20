@@ -53,9 +53,12 @@ function handleProfileFormSubmit({ name, about }) {
     .then(() => {
       user.setUserInfo({ name, about });
     })
-    .finally(() => {
+    .then(() => {
       profileEditModal.setLoading(false);
       profileEditModal.close();
+    })
+    .catch((err) => {
+      console.error(err);
     });
 }
 
@@ -76,16 +79,24 @@ function handleAvatarSubmit({ link }) {
     .then(() => {
       user.setAvatar(link);
     })
-    .finally(() => {
+    .then(() => {
       avatarEditModal.setLoading(false);
       avatarEditModal.close();
+    })
+    .catch((err) => {
+      console.error(err);
     });
 }
 
-api.getUserInfo().then((data) => {
-  user.setUserInfo(data);
-  user.setAvatar(data.avatar);
-});
+api
+  .getUserInfo()
+  .then((data) => {
+    user.setUserInfo(data);
+    user.setAvatar(data.avatar);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 // Add new card modal
 const addNewCardModal = new ModalWithForm(
@@ -105,28 +116,31 @@ function handleImageSubmit(card) {
     .then(() => {
       renderCard(card);
     })
-    .finally(() => {
+    .then(() => {
       addNewCardModal.setLoading(false);
       constants.imageSubmitForm.reset();
       addImageFormValidator.resetValidation();
       addNewCardModal.close();
+    })
+    .catch((err) => {
+      console.error(err);
     });
 }
 
 //Card like && dislike
 
-function likeButton(id) {
-  api.getInitialCards().then((data) =>
-    data.forEach((d) => {
-      if (d._id === id) {
-        if (d.isLiked === true) {
-          api.dislikeCard(id);
-        } else {
-          api.likeCard(id);
-        }
-      }
-    })
-  );
+function likeButton(card) {
+  if (card.isLiked()) {
+    api
+      .dislikeCard(card._id)
+      .then((response) => card.setIsLiked(response.isLiked))
+      .catch((err) => console.error(err));
+  } else {
+    api
+      .likeCard(card._id)
+      .then((response) => card.setIsLiked(response.isLiked))
+      .catch((err) => console.error(err));
+  }
 }
 
 //Delete card confirmation modal
@@ -144,7 +158,13 @@ function handleDeleteCardForm(id, element) {
     api
       .deleteCard(id)
       .then(() => element.remove())
-      .finally(() => confirmationModal.setLoading(false));
+      .then(() => {
+        confirmationModal.setLoading(false);
+        confirmationModal.close();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   });
 }
 
@@ -160,11 +180,16 @@ const cardSection = new Section(
   ".elements"
 );
 
-api.getInitialCards().then((cards) => {
-  cards.forEach((card) => {
-    renderCard(card);
+api
+  .getInitialCards()
+  .then((response) => {
+    response.forEach((res) => {
+      renderCard(res);
+    });
+  })
+  .catch((err) => {
+    console.error(err);
   });
-});
 
 // Functions
 function createCard(data) {
@@ -181,11 +206,6 @@ function createCard(data) {
 function renderCard(data) {
   const card = createCard(data);
   cardSection.addItem(card);
-  if (data.isLiked) {
-    card
-      .querySelector(".card__like-button")
-      .classList.add("card__like-button_active");
-  }
 }
 
 // Form Validation

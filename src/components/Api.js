@@ -18,11 +18,9 @@ export default class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._url}/users/me`, { headers: this._header })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => {
-        console.error(err);
-      });
+    return fetch(`${this._url}/users/me`, { headers: this._header }).then(
+      (res) => this._checkResponse(res)
+    );
   }
 
   updateUserProfile({ name, about }) {
@@ -33,11 +31,7 @@ export default class Api {
         name: `${name}`,
         about: `${about}`,
       }),
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then((res) => this._checkResponse(res));
   }
 
   updateAvatar({ link }) {
@@ -47,11 +41,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: `${link}`,
       }),
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then((res) => this._checkResponse(res));
   }
 
   addCard({ name, link }) {
@@ -62,43 +52,27 @@ export default class Api {
         name: name,
         link: link,
       }),
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then((res) => this._checkResponse(res));
   }
 
   deleteCard(id) {
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       headers: this._header,
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then((res) => this._checkResponse(res));
   }
 
   likeCard(id) {
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: "PUT",
       headers: this._header,
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then((res) => this._checkResponse(res));
   }
 
   dislikeCard(id) {
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: "DELETE",
       headers: this._header,
-    })
-      .then((res) => this._checkResponse(res))
-      .catch((err) => {
-        console.error(err);
-      });
+    }).then((res) => this._checkResponse(res));
   }
 }
