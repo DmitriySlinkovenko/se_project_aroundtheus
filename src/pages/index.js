@@ -76,14 +76,12 @@ function handleAvatarSubmit({ link }) {
     .updateAvatar({ link })
     .then(() => {
       user.setAvatar(link);
-    })
-    .then(() => {
-      avatarEditModal.setLoading(false);
       avatarEditModal.close();
     })
     .catch((err) => {
       console.error(err);
-    });
+    })
+    .finally(() => avatarEditModal.setLoading(false));
 }
 
 api
