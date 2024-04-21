@@ -52,14 +52,12 @@ function handleProfileFormSubmit({ name, about }) {
     .updateUserProfile({ name, about })
     .then(() => {
       user.setUserInfo({ name, about });
-    })
-    .then(() => {
-      profileEditModal.setLoading(false);
       profileEditModal.close();
     })
     .catch((err) => {
       console.error(err);
-    });
+    })
+    .finally(() => profileEditModal.setLoading(false));
 }
 
 //User avatar
@@ -113,18 +111,17 @@ function handleImageSubmit(card) {
   addNewCardModal.setLoading(true, "Saving...");
   api
     .addCard(card)
-    .then(() => {
-      renderCard(card);
-    })
-    .then(() => {
-      addNewCardModal.setLoading(false);
+    .then((res) => {
+      renderCard(res);
       constants.imageSubmitForm.reset();
       addImageFormValidator.resetValidation();
       addNewCardModal.close();
+      console.log(res);
     })
     .catch((err) => {
       console.error(err);
-    });
+    })
+    .finally(() => addNewCardModal.setLoading(false));
 }
 
 //Card like && dislike
@@ -153,42 +150,41 @@ confirmationModal.setEventListeners();
 
 function handleDeleteCardForm(id, element) {
   confirmationModal.open();
-  constants.deleteConfirmForm.addEventListener("submit", () => {
+  constants.deleteConfirmForm.addEventListener("submit", (e) => {
+    e.preventDefault();
     confirmationModal.setLoading(true, "Deleting...");
     api
       .deleteCard(id)
-      .then(() => element.remove())
       .then(() => {
-        confirmationModal.setLoading(false);
+        element.remove();
         confirmationModal.close();
       })
       .catch((err) => {
         console.error(err);
-      });
+      })
+      .finally(() => confirmationModal.setLoading(false, "Yes"));
   });
 }
 
-//Section
-const cardSection = new Section(
-  {
-    items: constants.initialCards,
-    renderer: (cardData) => {
-      const cardElement = createCard(cardData);
-      cardSection.addItem(cardElement);
-    },
-  },
-  ".elements"
-);
+let cardSection;
 
 api
   .getInitialCards()
-  .then((response) => {
-    response.forEach((res) => {
-      renderCard(res);
-    });
+  .then((cards) => {
+    cardSection = new Section(
+      {
+        items: cards,
+        renderer: (cardData) => {
+          const card = createCard(cardData);
+          cardSection.addItem(card);
+        },
+      },
+      ".elements"
+    );
+    cardSection.renderItems();
   })
-  .catch((err) => {
-    console.error(err);
+  .catch((error) => {
+    console.error("Error fetching initial cards", error);
   });
 
 // Functions
@@ -222,6 +218,7 @@ const avatarFormValidator = new FormValidator(
   constants.settings,
   constants.avatarSubmitForm
 );
+
 profileFormValidator.enableValidation();
 addImageFormValidator.enableValidation();
 avatarFormValidator.enableValidation();

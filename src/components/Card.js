@@ -19,7 +19,9 @@ class Card {
   _setEventListeners() {
     this._likeButton = this._element.querySelector(".card__like-button");
     this._deleteButton = this._element.querySelector(".card__remove-button");
-    this._likeButton.addEventListener("click", () => this._handleLike(this));
+    this._likeButton.addEventListener("click", () => {
+      this._handleLike(this);
+    });
     this._deleteButton.addEventListener("click", () => {
       this._handleDeleteButton(this.getId(), this._element);
     });

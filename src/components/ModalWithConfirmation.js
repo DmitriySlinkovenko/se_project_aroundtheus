@@ -10,9 +10,8 @@ export default class ModalWithConfirmation extends Modal {
 
   setEventListeners() {
     super.setEventListeners();
-    this._modalElement.addEventListener("submit", (e) => {
-      e.preventDefault();
-      this._handleCardDelete(this);
+    this._submitButton.addEventListener("submit", () => {
+      console.log("hello world");
     });
   }
 
