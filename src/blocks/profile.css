@@ -13,6 +13,26 @@
   margin-right: 30px;
 }
 
+.avatar__container {
+  position: relative;
+}
+
+.profile__avatar_edit-button {
+  position: absolute;
+  left: 0%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url(../images/avatar-hover.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: 0;
+}
+
+.profile__avatar_edit-button:hover {
+  opacity: 1;
+}
+
 .profile__info {
   display: grid;
   grid-template-areas:
