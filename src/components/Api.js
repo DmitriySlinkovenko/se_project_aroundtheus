@@ -52,7 +52,10 @@ export default class Api {
         name: name,
         link: link,
       }),
-    }).then((res) => this._checkResponse(res));
+    }).then((res) => {
+      console.log(res);
+      this._checkResponse(res);
+    });
   }
 
   deleteCard(id) {

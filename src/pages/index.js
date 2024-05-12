@@ -1,5 +1,5 @@
 import FormValidator from "../components/FormValidator.js";
-import Card from "../components/card.js";
+import Card from "../components/Card.js";
 import "./index.css";
 import * as constants from "../utils/constants.js";
 import ModalWithImage from "../components/ModalWithImage.js";
@@ -109,12 +109,11 @@ function handleImageSubmit(card) {
   addNewCardModal.setLoading(true, "Saving...");
   api
     .addCard(card)
-    .then((res) => {
-      renderCard(res);
+    .then(() => {
+      renderCard(card);
       constants.imageSubmitForm.reset();
       addImageFormValidator.resetValidation();
       addNewCardModal.close();
-      console.log(res);
     })
     .catch((err) => {
       console.error(err);
